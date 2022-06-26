@@ -40,7 +40,10 @@ namespace LiveLife.Migrations
                 {
                     SenderUserId = table.Column<long>(type: "bigint", nullable: false),
                     ReceiverUserId = table.Column<long>(type: "bigint", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    InviteStatus = table.Column<int>(type: "int", nullable: false),
+                    AcceptationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsBlocked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

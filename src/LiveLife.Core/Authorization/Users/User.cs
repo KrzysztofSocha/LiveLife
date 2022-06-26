@@ -10,13 +10,13 @@ namespace LiveLife.Authorization.Users
     public class User : AbpUser<User>
     {
         public const string DefaultPassword = "123qwe";
-        public ICollection<UserFriend> AddedUserFriends { get; set; }
-        public ICollection<UserFriend> AcceptedUserFriends { get; set; }
+        public ICollection<UserFriend> SentUserFriends { get; set; }
+        public ICollection<UserFriend> ReceivedUserFriends { get; set; }
         public static string CreateRandomPassword()
         {
             return Guid.NewGuid().ToString("N").Truncate(16);
         }
-        
+        public UserPage Page { get; set; }
         public static User CreateTenantAdminUser(int tenantId, string emailAddress)
         {
             var user = new User

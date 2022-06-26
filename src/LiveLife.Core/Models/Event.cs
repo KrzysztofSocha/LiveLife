@@ -16,6 +16,10 @@ namespace LiveLife.Models
         public string  Description { get; set; }
         public bool IsLimit { get; set; }
         public int? PeopleLimit { get; set; }
+        public bool IsPublic { get; set; }
+        public bool IsReported { get; set; }
+        public DateTime? ReportTime { get; set; }
+        public EventAddress Address { get; set; }
 
 
     }

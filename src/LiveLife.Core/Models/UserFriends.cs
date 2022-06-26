@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Entities.Auditing;
 using LiveLife.Authorization.Users;
+using LiveLife.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,5 +22,8 @@ namespace LiveLife.Models
        
         public User ReceiverUser { get; set; }
         public DateTime CreationTime { get ; set; }
+        public InviteStatusEnum InviteStatus { get; set; }
+        public DateTime? AcceptationTime { get; set; }
+        public bool IsBlocked { get; set; }
     }
 }

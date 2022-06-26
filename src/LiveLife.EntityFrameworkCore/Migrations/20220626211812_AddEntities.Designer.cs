@@ -4,6 +4,7 @@ using LiveLife.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LiveLife.Migrations
 {
     [DbContext(typeof(LiveLifeDbContext))]
-    partial class LiveLifeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220626211812_AddEntities")]
+    partial class AddEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1593,12 +1595,6 @@ namespace LiveLife.Migrations
                     b.Property<bool>("IsLimit")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsReported")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
@@ -1611,68 +1607,12 @@ namespace LiveLife.Migrations
                     b.Property<int?>("PeopleLimit")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ReportTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("Events");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.EventAddress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Address")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("City")
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<string>("DescriptionPlace")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId")
-                        .IsUnique();
-
-                    b.ToTable("EventAddresses");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.Interest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LanguageCode")
-                        .HasMaxLength(2)
-                        .HasColumnType("nvarchar(2)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Interests");
                 });
 
             modelBuilder.Entity("LiveLife.Models.UserFriend", b =>
@@ -1700,78 +1640,6 @@ namespace LiveLife.Migrations
                     b.HasIndex("ReceiverUserId");
 
                     b.ToTable("UserFriends");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.UserInterest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("InetestId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InterestId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserPageId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InterestId");
-
-                    b.HasIndex("UserPageId");
-
-                    b.ToTable("UserInterests");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.UserPage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("UserDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("UserPages");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.UserPagePost", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserInterestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserInterestId");
-
-                    b.ToTable("UserPagePosts");
                 });
 
             modelBuilder.Entity("LiveLife.MultiTenancy.Tenant", b =>
@@ -2056,17 +1924,6 @@ namespace LiveLife.Migrations
                     b.Navigation("LastModifierUser");
                 });
 
-            modelBuilder.Entity("LiveLife.Models.EventAddress", b =>
-                {
-                    b.HasOne("LiveLife.Models.Event", "Event")
-                        .WithOne("Address")
-                        .HasForeignKey("LiveLife.Models.EventAddress", "EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-                });
-
             modelBuilder.Entity("LiveLife.Models.UserFriend", b =>
                 {
                     b.HasOne("LiveLife.Authorization.Users.User", "ReceiverUser")
@@ -2084,41 +1941,6 @@ namespace LiveLife.Migrations
                     b.Navigation("ReceiverUser");
 
                     b.Navigation("SenderUser");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.UserInterest", b =>
-                {
-                    b.HasOne("LiveLife.Models.Interest", "Interest")
-                        .WithMany()
-                        .HasForeignKey("InterestId");
-
-                    b.HasOne("LiveLife.Models.UserPage", "UserPage")
-                        .WithMany("Interests")
-                        .HasForeignKey("UserPageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Interest");
-
-                    b.Navigation("UserPage");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.UserPage", b =>
-                {
-                    b.HasOne("LiveLife.Authorization.Users.User", "User")
-                        .WithOne("Page")
-                        .HasForeignKey("LiveLife.Models.UserPage", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.UserPagePost", b =>
-                {
-                    b.HasOne("LiveLife.Models.UserInterest", null)
-                        .WithMany("Posts")
-                        .HasForeignKey("UserInterestId");
                 });
 
             modelBuilder.Entity("LiveLife.MultiTenancy.Tenant", b =>
@@ -2210,8 +2032,6 @@ namespace LiveLife.Migrations
 
                     b.Navigation("Logins");
 
-                    b.Navigation("Page");
-
                     b.Navigation("Permissions");
 
                     b.Navigation("ReceivedUserFriends");
@@ -2223,21 +2043,6 @@ namespace LiveLife.Migrations
                     b.Navigation("Settings");
 
                     b.Navigation("Tokens");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.Event", b =>
-                {
-                    b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.UserInterest", b =>
-                {
-                    b.Navigation("Posts");
-                });
-
-            modelBuilder.Entity("LiveLife.Models.UserPage", b =>
-                {
-                    b.Navigation("Interests");
                 });
 #pragma warning restore 612, 618
         }
