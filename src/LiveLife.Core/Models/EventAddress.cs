@@ -7,6 +7,7 @@ namespace LiveLife.Models
     {
         public int Id { get; set; }
         [MaxLength(25)]
+        [Required]
         public string City { get; set; }
         [MaxLength(25)]
         public string Address { get; set; }

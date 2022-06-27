@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Abp.Authorization.Users;
 using Abp.Extensions;
 using LiveLife.Models;
@@ -32,6 +33,23 @@ namespace LiveLife.Authorization.Users
             user.SetNormalizedNames();
 
             return user;
+        }
+        public   List<User> GetUserFriends(UserManager userManager)
+        {
+            var userFriends = new List<User>();
+            var addedFriends = SentUserFriends.Where(x => x.InviteStatus == Enums.InviteStatusEnum.Accepted);
+            var acceptedFriends = ReceivedUserFriends.Where(x => x.InviteStatus == Enums.InviteStatusEnum.Accepted);
+            foreach (var userFriend in addedFriends)
+            {
+                var friend = userManager.GetUserById(userFriend.ReceiverUserId);
+                userFriends.Add(friend);
+            }
+            foreach (var userFriend in acceptedFriends)
+            {
+                var friend = userManager.GetUserById(userFriend.SenderUserId);
+                userFriends.Add(friend);
+            }
+            return userFriends;
         }
     }
 }

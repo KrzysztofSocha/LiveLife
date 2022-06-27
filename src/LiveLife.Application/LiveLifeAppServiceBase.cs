@@ -6,6 +6,7 @@ using Abp.IdentityFramework;
 using Abp.Runtime.Session;
 using LiveLife.Authorization.Users;
 using LiveLife.MultiTenancy;
+using AutoMapper;
 
 namespace LiveLife
 {
@@ -17,10 +18,16 @@ namespace LiveLife
         public TenantManager TenantManager { get; set; }
 
         public UserManager UserManager { get; set; }
+        private readonly IMapper _mapper;
 
         protected LiveLifeAppServiceBase()
         {
+           
             LocalizationSourceName = LiveLifeConsts.LocalizationSourceName;
+        }
+        public LiveLifeAppServiceBase(IMapper mapper)
+        {
+            _mapper = mapper;
         }
 
         protected virtual async Task<User> GetCurrentUserAsync()
