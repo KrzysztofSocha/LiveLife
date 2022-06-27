@@ -22,7 +22,8 @@ namespace LiveLife.Events.Dto
         public bool IsPublic { get; set; }
         public EventAddressDto Address { get; set; }
     }
-    [AutoMap(typeof(Models.EventAddress))]
+    [AutoMapTo(typeof(Models.EventAddress))]
+    [AutoMapFrom(typeof(Models.EventAddress))]
     public class EventAddressDto
     {
         public string City { get; set; }

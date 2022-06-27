@@ -26,6 +26,7 @@ namespace LiveLife.Models
         public bool IsReported { get; set; }
         public DateTime? ReportTime { get; set; }
         public EventAddress Address { get; set; }
+        public ICollection<EventUser> JoinedUsers { get; set; }
 
 
     }

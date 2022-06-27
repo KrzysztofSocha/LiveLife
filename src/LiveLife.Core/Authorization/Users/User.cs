@@ -13,6 +13,13 @@ namespace LiveLife.Authorization.Users
         public const string DefaultPassword = "123qwe";
         public ICollection<UserFriend> SentUserFriends { get; set; }
         public ICollection<UserFriend> ReceivedUserFriends { get; set; }
+        public ICollection<EventUser> UserEvents { get; set; }
+        public User()
+        {
+            SentUserFriends= new List<UserFriend>();
+            ReceivedUserFriends = new List<UserFriend>();
+            UserEvents= new List<EventUser>();
+        }
         public static string CreateRandomPassword()
         {
             return Guid.NewGuid().ToString("N").Truncate(16);
@@ -34,7 +41,7 @@ namespace LiveLife.Authorization.Users
 
             return user;
         }
-        public   List<User> GetUserFriends(UserManager userManager)
+        public  List<User> GetUserFriends(UserManager userManager)
         {
             var userFriends = new List<User>();
             var addedFriends = SentUserFriends.Where(x => x.InviteStatus == Enums.InviteStatusEnum.Accepted);

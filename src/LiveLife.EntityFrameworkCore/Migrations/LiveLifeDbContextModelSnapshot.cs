@@ -1606,7 +1606,9 @@ namespace LiveLife.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<int?>("PeopleLimit")
                         .HasColumnType("int");
@@ -1635,6 +1637,7 @@ namespace LiveLife.Migrations
                         .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
@@ -1650,6 +1653,21 @@ namespace LiveLife.Migrations
                         .IsUnique();
 
                     b.ToTable("EventAddresses");
+                });
+
+            modelBuilder.Entity("LiveLife.Models.EventUser", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "EventId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("EventUser");
                 });
 
             modelBuilder.Entity("LiveLife.Models.Interest", b =>
@@ -2067,6 +2085,25 @@ namespace LiveLife.Migrations
                     b.Navigation("Event");
                 });
 
+            modelBuilder.Entity("LiveLife.Models.EventUser", b =>
+                {
+                    b.HasOne("LiveLife.Models.Event", "Event")
+                        .WithMany("JoinedUsers")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LiveLife.Authorization.Users.User", "User")
+                        .WithMany("UserEvents")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LiveLife.Models.UserFriend", b =>
                 {
                     b.HasOne("LiveLife.Authorization.Users.User", "ReceiverUser")
@@ -2223,11 +2260,15 @@ namespace LiveLife.Migrations
                     b.Navigation("Settings");
 
                     b.Navigation("Tokens");
+
+                    b.Navigation("UserEvents");
                 });
 
             modelBuilder.Entity("LiveLife.Models.Event", b =>
                 {
                     b.Navigation("Address");
+
+                    b.Navigation("JoinedUsers");
                 });
 
             modelBuilder.Entity("LiveLife.Models.UserInterest", b =>

@@ -46,6 +46,15 @@ namespace LiveLife.EntityFrameworkCore
                .WithOne(x => x.Page)
                .HasForeignKey<UserPage>(x => x.UserId);
 
+            modelBuilder.Entity<EventUser>().HasKey(x => new { x.UserId, x.EventId });
+            modelBuilder.Entity<EventUser>().HasOne(x => x.User)
+                .WithMany(x => x.UserEvents)
+                .HasForeignKey(x => x.UserId);
+
+
+            modelBuilder.Entity<EventUser>().HasOne(x => x.Event)
+                .WithMany(x => x.JoinedUsers)
+                .HasForeignKey(x => x.EventId);
                 
 
 
