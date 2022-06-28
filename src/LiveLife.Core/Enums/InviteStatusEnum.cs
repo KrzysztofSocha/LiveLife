@@ -8,7 +8,7 @@ namespace LiveLife.Enums
 {
     public enum InviteStatusEnum
     {
-       Send,
+       Sent,
        Read,
        Ignored,
        Accepted

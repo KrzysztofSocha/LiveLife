@@ -14,6 +14,7 @@ namespace LiveLife.Models
         public Interest Interest { get; set; }
         public int UserPageId { get; set; }
         public UserPage UserPage { get; set; }
+        //TODO add decription
         public ICollection<UserPagePost> Posts { get; set; }
     }
 }

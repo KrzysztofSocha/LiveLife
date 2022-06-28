@@ -11,6 +11,9 @@ namespace LiveLife.Web.Views.Shared.Components.SideBarUserArea
         public string GetShownLoginName()
         {
             var userName = LoginInformations.User.UserName;
+            if (LoginInformations.User.Name!="Admin")
+                 userName= LoginInformations.User.Name +" "+ LoginInformations.User.Surname;
+
 
             if (!IsMultiTenancyEnabled)
             {
