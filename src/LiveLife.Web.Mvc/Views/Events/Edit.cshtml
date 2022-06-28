@@ -1,0 +1,51 @@
+﻿@using LiveLife.Events.Dto
+@model CreateOrUpdateEventDto
+@section Scripts
+{
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+			
+        });
+    </script>
+}
+<h2>Edit event</h2>
+<form method="post">
+	<div class="form-group">
+		<div class="form-row">
+			<div class="col-sm-3 my-1">
+				<label>Name</label>
+				<input type="text" class="form-control" asp-for="Name" />
+			</div>
+			<div class="col-sm-6 my-1">
+				<label>Description</label>
+				<input type="text" class="form-control" asp-for="Description" />
+			</div>
+			<div class="col-sm-2 my-1">
+				<label>Start time</label>
+				<input type="text" class="form-control" id="datepicker" asp-for="StartTime" value=@DateTime.Now.ToString("yyyy-MM-dd") />
+			</div>
+			<div class="col-sm-3 my-1">
+				<label>City</label>
+				<input type="text" class="form-control" asp-for="Address.City" />
+			</div>
+
+		</div>
+	</div>
+		
+
+
+
+
+
+		
+
+		<div>
+		
+			<button type="submit" class="btn btn-primary my-1">Submit</button>
+		</div>
+
+</form>

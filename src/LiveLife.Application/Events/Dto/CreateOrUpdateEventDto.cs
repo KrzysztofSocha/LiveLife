@@ -7,19 +7,21 @@ using System.Threading.Tasks;
 
 namespace LiveLife.Events.Dto
 {
-    [AutoMap(typeof (Models.Event))]
+    [AutoMapTo(typeof (Models.Event))]
+    [AutoMapFrom(typeof (Models.Event))]
     public class CreateOrUpdateEventDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
        
         public DateTime StartTime { get; set; }
         public DateTime? FinishTime { get; set; }
         public string Description { get; set; }
        
-        public bool IsLimit { get; set; }
-        public int? PeopleLimit { get; set; }
-       
-        public bool IsPublic { get; set; }
+        public bool IsLimit { get; set; }=false;
+        public int? PeopleLimit { get; set; } = null;
+
+        public bool IsPublic { get; set; } = true;
         public EventAddressDto Address { get; set; }
     }
     [AutoMapTo(typeof(Models.EventAddress))]

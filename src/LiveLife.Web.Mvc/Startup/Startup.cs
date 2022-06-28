@@ -21,7 +21,7 @@ using Abp.Json;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.WebEncoders;
 using Newtonsoft.Json.Serialization;
-
+using LiveLife.Events;
 
 namespace LiveLife.Web.Startup
 {
@@ -64,7 +64,7 @@ namespace LiveLife.Web.Startup
             });
             
             services.AddScoped<IWebResourceManager, WebResourceManager>();
-
+            //services.AddScoped<IEventAppService, EventAppService>();
             services.AddSignalR();
 
             // Configure Abp and Dependency Injection

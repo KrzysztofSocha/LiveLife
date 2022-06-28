@@ -1,0 +1,30 @@
+﻿@using LiveLife.Events.Dto
+@using LiveLife.Web.Startup
+@{
+    ViewBag.Title = L("Events");
+    ViewBag.CurrentPageName = PageNames.Events;
+}
+@model IEnumerable<GetEventOutputDto>
+
+ <a  class="btn btn-sm btn-info float-right"  asp-action="UserEvents" >My events</a>
+ <a  class="btn btn-sm btn-info float-right"  asp-action="Create" >Add event</a>
+ <a  class="btn btn-sm btn-info float-right"  asp-action="JoinedEvents" >Joined events</a>
+@foreach (var item in @Model)
+{
+    <div class="container-fluid  ">
+     <div class="row ">
+    <div class="col-6">
+       
+        <div class="bg-secondary">
+            <h3> @item.Name</h3>
+            <h5>@item.Description</h5>
+            <h5>@item.StartTime.ToString("dd.MM.yyyy")</h5>
+            <h4><i class="fas fa-map-marker-alt"></i> @item.Address.City</h4>
+            <a  class="btn btn-sm btn-info float-right"  asp-action="Join" asp-route-id="@item.Id">Join</a>
+            <a  class="btn btn-sm btn-danger float-left"  asp-action="Report" asp-route-id="@item.Id">Report</a>
+        </div>
+    </div>
+     </div>
+</div>
+}
+

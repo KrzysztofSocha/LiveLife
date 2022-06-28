@@ -19,13 +19,16 @@ namespace LiveLife.Events
         private readonly IRepository<Event> _eventRepository;
         private readonly IMapper _mapper;
         private readonly UserManager _userManager;
+        private readonly IRepository<User, long> _userRepository;
         public EventAppService(IRepository<Event> eventRepository, 
             IMapper mapper,
-            UserManager userManager)
+            UserManager userManager,
+            IRepository<User, long> userRepository)
         {
             _mapper = mapper;
             _eventRepository = eventRepository;
             _userManager = userManager;
+            _userRepository = userRepository;   
         }
         [AbpAuthorize]
         public async Task CreateEventAsync(CreateOrUpdateEventDto input)
@@ -67,12 +70,21 @@ namespace LiveLife.Events
         {
             try
             {
-                var currentUser = await _userManager.GetUserByIdAsync((long)AbpSession.UserId);
+                //var currentUser = await _userManager.GetUserByIdAsync((long)AbpSession.UserId);
+                var currentUser = await _userRepository.GetAll()
+                    .Include(x => x.ReceivedUserFriends)
+                    .ThenInclude(x => x.SenderUser)
+                    .Include(x => x.SentUserFriends)
+                    .ThenInclude(x => x.ReceiverUser)
+                    .FirstOrDefaultAsync(x => x.Id ==  AbpSession.UserId);
                 var userFriends = currentUser.GetUserFriends(_userManager);
                 var events = await _eventRepository.GetAll()
                     .Include(x=>x.Address)
-                    .Where(x => x.IsPublic || userFriends.Select(y=>y.Id).Contains((long) x.CreatorUserId))
-                    .OrderByDescending(x=>x.CreationTime)
+                    .Include(x=>x.JoinedUsers)
+                    .Where(x => (x.IsPublic || userFriends.Select(y => y.Id).Contains((long)x.CreatorUserId)) 
+                    && !x.JoinedUsers.Any(z=>z.UserId==AbpSession.UserId) 
+                    && x.StartTime >= DateTime.Now)
+                    .OrderByDescending(x => x.CreationTime)
                     .ToListAsync();
                 return _mapper.Map<List<GetEventOutputDto>>(events);
             }
@@ -84,12 +96,13 @@ namespace LiveLife.Events
             
         }
 
-        public async Task<GetEventOutputDto> GetByIdAsync(int id)
+        public async Task<CreateOrUpdateEventDto> GetByIdToEditAsync(int id)
         {
             try
             {
                 var userEvent =await _eventRepository.GetAllIncluding(x=>x.Address).FirstOrDefaultAsync(x => x.Id == id);
-                return _mapper.Map<GetEventOutputDto>(userEvent);
+                return _mapper.Map<CreateOrUpdateEventDto>(userEvent);
+                
             }
             catch ( Exception ex)
             {
@@ -97,6 +110,28 @@ namespace LiveLife.Events
                 throw new UserFriendlyException(ex.Message);
             }
         }
+
+        public async  Task<List<GetEventOutputDto>> GetJoinedEvents()
+        {
+            try
+            {
+                //var currentUser = await _userManager.GetUserByIdAsync((long)AbpSession.UserId);
+                
+                var events = await _eventRepository.GetAll()
+                    .Include(x => x.Address)
+                    .Include(x => x.JoinedUsers)
+                    .Where(x => x.JoinedUsers.Any(z => z.UserId == AbpSession.UserId))
+                    .OrderByDescending(x => x.CreationTime)
+                    .ToListAsync();
+                return _mapper.Map<List<GetEventOutputDto>>(events);
+            }
+            catch (Exception ex)
+            {
+
+                throw new UserFriendlyException(ex.Message);
+            }
+        }
+
         [AbpAuthorize]
         public async Task<List<GetRepotedEventOutput>> GetReportedEvents()
         {
@@ -178,11 +213,11 @@ namespace LiveLife.Events
             }
         }
 
-        public async Task UpdateEventAsync(CreateOrUpdateEventDto input, int id)
+        public async Task UpdateEventAsync(CreateOrUpdateEventDto input)
         {
             try
             {
-                var userEvent = await _eventRepository.GetAllIncluding(x => x.Address).FirstOrDefaultAsync(x => x.Id == id);
+                var userEvent = await _eventRepository.GetAllIncluding(x => x.Address).FirstOrDefaultAsync(x => x.Id == input.Id);
                 userEvent = _mapper.Map<CreateOrUpdateEventDto,Event>(input, userEvent);
                 await _eventRepository.UpdateAsync(userEvent);
             }

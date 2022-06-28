@@ -29,12 +29,13 @@ namespace LiveLife.Web.Startup
                         icon: "fas fa-home",
                         requiresAuthentication: true
                     )
-                    .AddItem(
+                 )
+                .AddItem(
                     new MenuItemDefinition(
                         PageNames.Events,
-                        L("HomePage"),
-                        url: "",
-                        icon: "fas fa-home",
+                        L("Events"),
+                        url: "Events",
+                        icon: "fas fa-users",
                         requiresAuthentication: true
                     )
                 ).AddItem(

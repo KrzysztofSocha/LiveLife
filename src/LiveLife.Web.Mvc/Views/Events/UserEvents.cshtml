@@ -1,0 +1,27 @@
+﻿@using LiveLife.Events.Dto
+@using LiveLife.Web.Startup
+@{
+    ViewBag.Title ="UserEvents";
+    ViewBag.CurrentPageName = "UserEvents";
+}
+@model IEnumerable<GetEventOutputDto>
+
+
+@foreach (var item in @Model)
+{
+    <div class="container-fluid  ">
+     <div class="row ">
+    <div class="col-6">
+       
+        <div class="bg-secondary">
+            <h3> @item.Name</h3>
+            <h5>@item.Description</h5>
+            <h5>@item.StartTime.ToString("dd.MM.yyyy")</h5>
+            <h4><i class="fas fa-map-marker-alt"></i> @item.Address.City</h4>
+            <a  class="btn btn-sm btn-info float-right"  asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            <a  class="btn btn-sm btn-danger float-left"  asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </div>
+    </div>
+     </div>
+</div>
+}
