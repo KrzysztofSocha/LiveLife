@@ -2,6 +2,7 @@
 using Abp.Domain.Repositories;
 using Abp.UI;
 using AutoMapper;
+using LiveLife.Authorization;
 using LiveLife.Authorization.Users;
 using LiveLife.Events.Dto;
 using LiveLife.Models;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace LiveLife.Events
 {
+    [AbpAuthorize]
     public class EventAppService : LiveLifeAppServiceBase, IEventAppService
     {
         private readonly IRepository<Event> _eventRepository;
@@ -30,7 +32,7 @@ namespace LiveLife.Events
             _userManager = userManager;
             _userRepository = userRepository;   
         }
-        [AbpAuthorize]
+        
         public async Task CreateEventAsync(CreateOrUpdateEventDto input)
         {
             try
@@ -48,16 +50,16 @@ namespace LiveLife.Events
                 throw new UserFriendlyException($"Błąd podczas dodwania wydarzenia: {ex.Message}");
             }
         }
-        [AbpAuthorize]
+       
         public async Task DeleteEventAsync(int id)
         {
             try
             {
-                var eventToDelete =await _eventRepository.FirstOrDefaultAsync(x => x.Id == id);
-                if(eventToDelete != null)
-                {
+                //var eventToDelete =await _eventRepository.FirstOrDefaultAsync(x => x.Id == id);
+                //if(eventToDelete != null)
+                
                     await _eventRepository.DeleteAsync(id);
-                }
+                
             }
             catch (Exception ex)
             {
@@ -65,7 +67,7 @@ namespace LiveLife.Events
                 throw new UserFriendlyException(ex.Message);
             }
         }
-        [AbpAuthorize]
+      
         public async Task<List<GetEventOutputDto>> GetAvaialableEvents()
         {
             try
@@ -132,7 +134,8 @@ namespace LiveLife.Events
             }
         }
 
-        [AbpAuthorize]
+        
+        [AbpAuthorize(PermissionNames.Pages_Events_Reports)]
         public async Task<List<GetRepotedEventOutput>> GetReportedEvents()
         {
             try
@@ -161,7 +164,7 @@ namespace LiveLife.Events
                 throw new UserFriendlyException(ex.Message);
             }
         }
-        [AbpAuthorize]
+       
         public async Task JoinToEvent(int id)
         {
             try

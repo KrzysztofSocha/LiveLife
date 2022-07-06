@@ -1,0 +1,49 @@
+﻿@using LiveLife.Events.Dto
+@model IEnumerable<GetRepotedEventOutput>
+
+<h2>Reported Events</h2>
+<div>
+    <table class="table">
+        <thead class=" tab-pane">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>StartTime</th>
+                <th>ReportTime</th>
+                
+                
+               
+               
+                <th></th>
+
+
+
+            </tr>
+        </thead>
+        <tbody class="tab-content">
+            @foreach(var item in Model)
+            {
+                <tr>
+                     <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.StartTime</td>
+                    <td>@item.ReportTime</td>
+                  
+                    
+                    
+                   
+                        
+                        <td>
+                            <a class="btn btn-danger float-right" asp-action="DeleteAsAdmin" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                       
+                                   
+                   
+                    
+                    
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

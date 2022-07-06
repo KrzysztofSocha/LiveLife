@@ -3,6 +3,7 @@
   <texts>
     <text name="HomePage" value="Home page" />
     <text name="Events" value="Events" />
+    <text name="ReportedEvents" value="Reported Events" />
     <text name="About" value="About" />
     <text name="WelcomeMessage" value="Welcome to LiveLife!" />
     <text name="FormIsNotValidMessage" value="Form is not valid. Please check and fix errors." />

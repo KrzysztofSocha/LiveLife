@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Abp.AspNetCore.Mvc.Authorization;
+using AutoMapper;
+using LiveLife.Authorization;
 using LiveLife.Controllers;
 using LiveLife.Events;
 using LiveLife.Events.Dto;
@@ -46,6 +48,11 @@ namespace LiveLife.Web.Controllers
             await _eventAppService.DeleteEventAsync(id);
             return RedirectToAction("UserEvents");
         }
+        public async Task<IActionResult> DeleteAsAdmin(int id)
+        {
+            await _eventAppService.DeleteEventAsync(id);
+            return RedirectToAction("Index");
+        }
         public async Task<IActionResult> Leave(int id)
         {
             await _eventAppService.LeaveEvent(id);
@@ -79,6 +86,12 @@ namespace LiveLife.Web.Controllers
             await _eventAppService.CreateEventAsync(model);
             return RedirectToAction("Index");
 
+        }
+        [AbpMvcAuthorize(PermissionNames.Pages_Events_Reports)]
+        public async Task<IActionResult> ReportedEvents()
+        {
+            var model = await _eventAppService.GetReportedEvents();
+            return View(model);
         }
 
     }

@@ -46,6 +46,7 @@ namespace LiveLife.Web.Startup
                         icon: "fas fa-building",
                         permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Tenants)
                     )
+                    
                 ).AddItem(
                     new MenuItemDefinition(
                         PageNames.Users,
@@ -62,7 +63,15 @@ namespace LiveLife.Web.Startup
                         icon: "fas fa-theater-masks",
                         permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Roles)
                     )
-                );
+                )
+                .AddItem(
+                    new MenuItemDefinition(
+                        "ReportedEvents",
+                        L("ReportedEvents"),
+                        url: "Events/ReportedEvents",
+                        icon: "fas fa-building",
+                        permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Events_Reports)
+                    ));
                 //.AddItem( // Menu items below is just for demonstration!
                 //    new MenuItemDefinition(
                 //        "MultiLevelMenu",
