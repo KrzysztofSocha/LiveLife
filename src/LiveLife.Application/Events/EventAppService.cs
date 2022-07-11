@@ -55,10 +55,10 @@ namespace LiveLife.Events
         {
             try
             {
-                //var eventToDelete =await _eventRepository.FirstOrDefaultAsync(x => x.Id == id);
+                var eventToDelete =await _eventRepository.GetAllIncluding(x=>x.Address).FirstOrDefaultAsync(x => x.Id == id);
                 //if(eventToDelete != null)
                 
-                    await _eventRepository.DeleteAsync(id);
+                    await _eventRepository.DeleteAsync(eventToDelete);
                 
             }
             catch (Exception ex)
