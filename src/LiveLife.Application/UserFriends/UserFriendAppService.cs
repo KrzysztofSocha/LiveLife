@@ -150,8 +150,8 @@ namespace LiveLife.UserFriends
                          .ToListAsync();
                 }
                 var result= _mapper.Map<List<UserFriendOutputDto>>(searchResult);
-                var user = await _userManager.GetUserByIdAsync((long)AbpSession.UserId);
-                var userFriends = user.GetUserFriends(_userManager);
+                
+                var userFriends =  await GetUserFriend();
                 foreach(var item in result)
                 {
                     if (userFriends.Any(x => x.Id == item.Id) || item.Id==AbpSession.UserId)
@@ -166,6 +166,8 @@ namespace LiveLife.UserFriends
 
                 throw new UserFriendlyException(ex.Message);
             }
+            
         }
+        //TODO usuwanie oraz wysłane pobieranie
     }
 }

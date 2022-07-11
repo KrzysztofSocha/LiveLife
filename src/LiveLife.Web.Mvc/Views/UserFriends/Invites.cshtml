@@ -1,0 +1,32 @@
+﻿@using LiveLife.UserFriends.Dto
+@using LiveLife.Web.Startup
+@{
+    ViewBag.Title = L("Search");
+    ViewBag.CurrentPageName = PageNames.UserFriends;
+}
+@model IEnumerable<UserFriendOutputDto>
+
+    <div class="container-fluid">
+
+    @foreach (var item in @Model)
+    {
+        
+        <div class="media col-sm-2 bg-lightblue" style="margin-top:20px">
+            <img class="user-image img-circle mr-3  elevation-5" src="~/libs/admin-lte/dist/img/avatar5.png" width="50" height="50" style="margin:5px">
+            <div class="media-body">
+                 <h5 class="mt-0">@item.FullName</h5>
+                
+                    @if (!@item.IsFriend)
+                    {
+                        <form asp-action="AcceptFriend" asp-route-id="@item.Id">
+                            <button class="btn-sm btn-info float-right" style="margin:5px" type="submit" >@L("AcceptFriend")</button>
+                        </form>
+                    }
+            </div>
+        </div>
+        
+    }
+    </div>
+    
+
+

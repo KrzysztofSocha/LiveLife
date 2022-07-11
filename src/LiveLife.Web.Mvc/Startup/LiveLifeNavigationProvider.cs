@@ -30,6 +30,30 @@ namespace LiveLife.Web.Startup
                         requiresAuthentication: true
                     )
                  )
+                 .AddItem(
+                    new MenuItemDefinition(
+                        PageNames.UserFriends,
+                        L("UserFriends"),
+                        url: "UserFriends",
+                        icon: "fas fa-user-friends",
+                        requiresAuthentication: true
+                    )
+                    .AddItem(
+                    new MenuItemDefinition(
+                        PageNames.UserFriends,
+                        L("UserFriends"),
+                        url: "UserFriends/Index",
+                        icon: "fas fa-user-friends",
+                        requiresAuthentication: true
+                    ))
+                    .AddItem(
+                    new MenuItemDefinition(
+                        PageNames.UserFriends,
+                        L("Invites"),
+                        url: "UserFriends/Invites",
+                        icon: "fas fa-envelope",
+                        requiresAuthentication: true
+                    )))
                 .AddItem(
                     new MenuItemDefinition(
                         PageNames.Events,
@@ -38,6 +62,7 @@ namespace LiveLife.Web.Startup
                         icon: "fab fa-asymmetrik",
                         requiresAuthentication: true
                     )
+                   
                 ).AddItem(
                     new MenuItemDefinition(
                         PageNames.Tenants,

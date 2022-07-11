@@ -5,6 +5,9 @@
     <text name="Events" value="Events" />
     <text name="ReportedEvents" value="Reported Events" />
     <text name="AddFriend" value="Add Friend" />
+    <text name="UserFriends" value="Friends" />
+    <text name="AcceptFriend" value="Accept" />
+    <text name="Invites" value="Invites" />
     <text name="About" value="About" />
     <text name="WelcomeMessage" value="Welcome to LiveLife!" />
     <text name="FormIsNotValidMessage" value="Form is not valid. Please check and fix errors." />
