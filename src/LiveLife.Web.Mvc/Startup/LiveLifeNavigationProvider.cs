@@ -35,7 +35,7 @@ namespace LiveLife.Web.Startup
                         PageNames.Events,
                         L("Events"),
                         url: "Events",
-                        icon: "fas fa-users",
+                        icon: "fab fa-asymmetrik",
                         requiresAuthentication: true
                     )
                 ).AddItem(
@@ -69,7 +69,7 @@ namespace LiveLife.Web.Startup
                         "ReportedEvents",
                         L("ReportedEvents"),
                         url: "Events/ReportedEvents",
-                        icon: "fas fa-building",
+                        icon: "fas fa-flag",
                         permissionDependency: new SimplePermissionDependency(PermissionNames.Pages_Events_Reports)
                     ));
                 //.AddItem( // Menu items below is just for demonstration!

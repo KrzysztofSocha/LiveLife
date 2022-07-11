@@ -1,11 +1,16 @@
-﻿<ul class="navbar-nav">
+﻿<ul class="navbar-nav  navbar-dark bg-dark">
     <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="javascript:;"><i class="fas fa-bars"></i></a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
         <a class="nav-link" asp-controller="Home" asp-action="Index">@L("HomePage")</a>
     </li>
-    <li class="nav-item d-none d-sm-inline-block">
+    @*<li class="nav-item d-none d-sm-inline-block">
         <a class="nav-link" asp-controller="About" asp-action="Index">@L("About")</a>
-    </li>
+    </li>*@
+    <form asp-controller="UserFriends" asp-action="Search" asp-route-id="SearchString" class="form-inline my-3 my-lg-0" >
+      <input class="form-control mr-sm-2" type="search" placeholder=@L("Search") aria-label="Search" name="SearchString" >
+      <button class="btn btn-outline-info  my-2 my-sm-0" type="submit"> @L("Search")</button>
+    </form>
 </ul>
+ 

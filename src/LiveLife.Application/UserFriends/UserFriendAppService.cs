@@ -145,11 +145,21 @@ namespace LiveLife.UserFriends
                 {
                     searchResult = await _userRepository.GetAll()
                         .Where(x => x.EmailAddress.Contains(searchString)
-                        || x.Name == searchString
-                        || x.Surname == searchString)
+                        || x.Name.Contains( searchString)
+                        || x.Surname.Contains( searchString))
                          .ToListAsync();
                 }
-                return _mapper.Map<List<UserFriendOutputDto>>(searchResult);
+                var result= _mapper.Map<List<UserFriendOutputDto>>(searchResult);
+                var user = await _userManager.GetUserByIdAsync((long)AbpSession.UserId);
+                var userFriends = user.GetUserFriends(_userManager);
+                foreach(var item in result)
+                {
+                    if (userFriends.Any(x => x.Id == item.Id) || item.Id==AbpSession.UserId)
+                        item.IsFriend = true;
+                    else
+                        item.IsFriend = false;
+                }
+                return result;
             }
             catch (Exception ex)
             {

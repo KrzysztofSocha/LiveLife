@@ -14,7 +14,7 @@ namespace LiveLife.UserFriends.Dto
         public int Id { get; set; }
         public string EmailAddress { get; set; }
 
-        
+        public bool IsFriend { get; set; }
         public string FullName { get; set; }
     }
 }
