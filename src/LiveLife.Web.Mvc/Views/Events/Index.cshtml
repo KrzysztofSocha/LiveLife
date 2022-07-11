@@ -5,26 +5,49 @@
     ViewBag.CurrentPageName = PageNames.Events;
 }
 @model IEnumerable<GetEventOutputDto>
-
+<div class="content-header" style="margin-block-end:20px">
+<div class="btn-group-toggle">
  <a  class="btn btn-sm btn-info float-right"  asp-action="UserEvents" >My events</a>
  <a  class="btn btn-sm btn-info float-right"  asp-action="Create" >Add event</a>
  <a  class="btn btn-sm btn-info float-right"  asp-action="JoinedEvents" >Joined events</a>
+ </div>
+ </div>
 @foreach (var item in @Model)
 {
-    <div class="container-fluid  ">
-     <div class="row ">
-    <div class="col-6">
        
-        <div class="bg-secondary  mx-auto">
-            <h3> @item.Name</h3>
-            <h5>@item.Description</h5>
-            <h5>@item.StartTime.ToString("dd.MM.yyyy")</h5>
-            <h4><i class="fas fa-map-marker-alt"></i> @item.Address.City</h4>
-            <a  class="btn btn-sm btn-info float-right"  asp-action="Join" asp-route-id="@item.Id">Join</a>
-            <a  class="btn btn-sm btn-danger float-left"  asp-action="Report" asp-route-id="@item.Id">Report</a>
-        </div>
-    </div>
-     </div>
-</div>
+        
+       <div class="row">
+                <div class=" card bg-secondary mx-auto" style="margin: 10px auto; width:600px; margin-bottom:10px ">
+                    <div class="card-header" style="height:5px">
+                        <div class="btn-group float-sm-right">
+                            <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                <a  asp-action="Report" asp-route-id="@item.Id" class="dropdown-item">@L("Report")</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row card-body">
+                        <div class="col-sm-6">
+                            <h3> @item.Name</h3>
+                            <p>@item.Description</p>
+                            <h6>@item.StartTime.ToString("dd.MM.yyyy")</h6>
+                            <h6><i class="fas fa-map-marker-alt"></i> @item.Address.City</h6>
+                        </div>
+                         <div class="col-sm-6">
+                            <img class="card-img" src="..." alt="Card image cap">
+                            @*<a  class="btn btn-lg btn-info float-right"  asp-action="Join" asp-route-id="@item.Id">Join</a>*@
+                            @*<a  class="btn btn-sm btn-danger float-left"  asp-action="Report" asp-route-id="@item.Id">Report</a>*@
+                        </div>
+                    </div>
+                     <div class="row card-body">
+                          <div class="col-sm">
+                                <a  class="btn btn-lg btn-info float-right"  asp-action="Join" asp-route-id="@item.Id">@L("Join")</a>
+                         </div>
+                    </div>
+                </div>
+       </div>
+   
 }
 

@@ -8,6 +8,8 @@
     <text name="UserFriends" value="Friends" />
     <text name="AcceptFriend" value="Accept" />
     <text name="Invites" value="Invites" />
+    <text name="Report" value="Report" />
+    <text name="Join" value="Join" />
     <text name="About" value="About" />
     <text name="WelcomeMessage" value="Welcome to LiveLife!" />
     <text name="FormIsNotValidMessage" value="Form is not valid. Please check and fix errors." />
